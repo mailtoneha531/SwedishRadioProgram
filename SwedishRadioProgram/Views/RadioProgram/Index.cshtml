@@ -1,0 +1,41 @@
+﻿@model List<ProgramDetails>
+
+@{
+    ViewData["Title"] = "Humor Programs with Podcasts";
+}
+
+<div class="container mt-4">
+    <h1>Humor Programs with Podcasts</h1>
+    @foreach (var program in Model)
+    {
+        <div class="card mb-4">
+            <div class="card-header">
+                @program.Name - @program.Description
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="@program.Image" class="img-fluid" alt="@program.Name">
+                    </div>
+                    <div class="col-md-8">
+                        @foreach (var episode in program.LastThreeEpisodes)
+                        {
+                            <div class="mb-3">
+                                <h5>@episode.Title</h5>
+                                <p>Publication Date: @episode.PublicationDate.ToString("yyyy-MM-dd HH:mm:ss")</p>
+                                <p>Duration: @episode.Duration.ToString(@"hh\:mm\:ss")</p>
+                                @if (!string.IsNullOrEmpty(episode.AudioUrl))
+                                {
+                                    <audio controls>
+                                        <source src="@episode.AudioUrl" type="audio/mpeg">
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
